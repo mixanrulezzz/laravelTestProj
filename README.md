@@ -65,8 +65,19 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
+# Версии и зависимости
 
-#Дополнение
+PHP 7.4
+
+Laravel 8.75
+
+Mysql 5
+
+Redis 6
+
+Orchid 10.26
+
+## Дополнение
 
 Используется админка https://orchid.software/ , для нее при установке нужно выполнить команду 
 php artisan orchid:admin admin admin@admin.com password
