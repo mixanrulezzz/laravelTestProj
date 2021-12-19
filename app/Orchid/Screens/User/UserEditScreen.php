@@ -22,6 +22,8 @@ use Orchid\Support\Facades\Toast;
 
 class UserEditScreen extends Screen
 {
+    use \Orchid\Fortify\TwoFactorScreenAuthenticatable;
+
     /**
      * Display header name.
      *

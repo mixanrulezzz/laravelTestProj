@@ -19,6 +19,8 @@ use Orchid\Support\Facades\Toast;
 
 class UserProfileScreen extends Screen
 {
+    use \Orchid\Fortify\TwoFactorScreenAuthenticatable;
+
     /**
      * Display header name.
      *
@@ -54,7 +56,9 @@ class UserProfileScreen extends Screen
      */
     public function commandBar(): array
     {
-        return [];
+        return [
+            $this->twoFactorCommandBar(),
+        ];
     }
 
     /**
@@ -82,6 +86,8 @@ class UserProfileScreen extends Screen
                         ->icon('check')
                         ->method('changePassword')
                 ),
+
+            $this->twoFactorLayout(),
         ];
     }
 
