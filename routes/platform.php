@@ -42,6 +42,15 @@ Route::screen('profile', UserProfileScreen::class)
             ->push(__('Profile'), route('platform.profile'));
     });
 
+Route::get('profile/openTwoFactorModal', 'UserProfileScreen@openTwoFactorModal')
+    ->name('platform.profile.openTwoFactorModal');
+
+Route::get('profile/disableTwoFactorAuth', 'UserProfileScreen@disableTwoFactorAuth')
+    ->name('platform.profile.disableTwoFactorAuth');
+
+Route::get('profile/checkTwoFactorAuth', 'UserProfileScreen@checkTwoFactorAuth')
+    ->name('platform.profile.checkTwoFactorAuth');
+
 // Platform > System > Users
 Route::screen('users/{user}/edit', UserEditScreen::class)
     ->name('platform.systems.users.edit')

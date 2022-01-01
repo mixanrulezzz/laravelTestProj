@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Orchid\Screens\User;
 
 use App\Orchid\Layouts\User\ProfilePasswordLayout;
+use App\Orchid\Layouts\User\TwoFactorAuthLayout;
 use App\Orchid\Layouts\User\UserEditLayout;
+use App\Orchid\Traits\TwoFactorScreenAuthenticatable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
@@ -19,7 +21,7 @@ use Orchid\Support\Facades\Toast;
 
 class UserProfileScreen extends Screen
 {
-    use \Orchid\Fortify\TwoFactorScreenAuthenticatable;
+    use TwoFactorScreenAuthenticatable;
 
     /**
      * Display header name.
@@ -87,7 +89,8 @@ class UserProfileScreen extends Screen
                         ->method('changePassword')
                 ),
 
-            $this->twoFactorLayout(),
+            $this->twoFactorView(),
+            $this->twoFactorModal(),
         ];
     }
 

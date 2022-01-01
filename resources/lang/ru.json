@@ -1,0 +1,14 @@
+{
+    "Two-factor authentication" : "Двухфакторная аунтентификация",
+    "For better protection you can activate two-factor authentication": "Для большей безопасности вы можете активировать двухфакторную аунтентификацию",
+    "Enable two-factor authentication": "Включить двухфакторную аунтентификацию",
+    "Disable two-factor authentication": "Выключить двухфакторную аунтентификацию",
+    "Two-factor authentication has been disabled": "Двухфакторная аунтентификация отключена",
+    "Two-factor authentication has been enabled": "Двухфакторная аунтентификация включена",
+    "Two factor authentication": "Двухфакторная аунтентификация",
+    "Scan the following QR code using your phone's authenticator application and enter the resulting code from app to enable two-factor auth": "Просканируйте QR-код с помощью Google Authenticator и введите получившийся код из приложения для включения двухфакторной аунтентификации",
+    "Verification code": "Проверочный код",
+    "Two-factor authentication hasn't been enabled": "Не удалось включить двухфакторную аунтентификацию",
+    "Show 2FA Recovery Codes": "Коды восстановления двухфакторной аунтентификации",
+    "Store these recovery codes in a secure password manager. They can be used to recover access to your account if your two factor authentication device is lost.": "Храните эти коды восстановления в безопасном диспетчере паролей. Их можно использовать для восстановления доступа к вашей учетной записи, если ваше устройство двухфакторной аутентификации потеряно."
+}

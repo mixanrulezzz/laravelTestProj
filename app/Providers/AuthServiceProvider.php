@@ -27,6 +27,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
+        // Для fortify, иначе 429 ошибка
         RateLimiter::for("login", function () {
             Limit::perMinute(5);
         });
