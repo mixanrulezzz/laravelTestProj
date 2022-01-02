@@ -4,6 +4,7 @@ namespace App\Orchid\Traits;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Laravel\Fortify\Actions\DisableTwoFactorAuthentication;
 use Laravel\Fortify\Actions\EnableTwoFactorAuthentication;
 use Laravel\Fortify\Actions\GenerateNewRecoveryCodes;
@@ -28,7 +29,7 @@ trait TwoFactorScreenAuthenticatable
         return ModalToggle::make('ModalToggle')
             ->modal('two-factor-auth')
             ->method('checkTwoFactorAuth')
-            ->canSee(false);
+            ->canSee(true);
     }
 
     /**
@@ -105,9 +106,10 @@ trait TwoFactorScreenAuthenticatable
         /** @var User $user */
         $user = $request->session()->get('user');
 
-        $code = $request->get('verificationCode') ?? ''; // todo Проверить что пришло
+        $code = $request->get('verificationCode') ?? '';
 
         $isValid = false;
+
         if (strlen($code) == 6) {
             $isValid = $user->checkTwoFactorCode($code);
         }
@@ -122,6 +124,12 @@ trait TwoFactorScreenAuthenticatable
         } else {
             // todo Вывод ошибок
             Toast::error(__('Two-factor authentication hasn\'t been enabled'));
+
+
+
+//            throw ValidationException::withMessages([
+//                'verificationCode' => __('Wrong verification code')
+//            ]);
         }
     }
 }

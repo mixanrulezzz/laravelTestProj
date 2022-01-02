@@ -9,7 +9,7 @@ use PragmaRX\Google2FA\Google2FA;
 trait TwoFactorAuthCustom {
 
     /**
-     *
+     * Генерирование нового секрета для двухфакторной аунтентификации
      */
     public function generateTwoFactorSecret() {
         $provider = new TwoFactorAuthenticationProvider(new Google2FA());
@@ -18,6 +18,9 @@ trait TwoFactorAuthCustom {
         $this->two_factor_secret = $secretKey;
     }
 
+    /**
+     * Генерирование кодов для восстановления двухфакторной аунтентификации
+     */
     public function generateRecoveryCodes() {
         // todo Сделать кол-во кодов настраиваемым
         $this->two_factor_recovery_codes = encrypt(json_encode(Collection::times(8, function () {
@@ -25,6 +28,12 @@ trait TwoFactorAuthCustom {
         })->all()));
     }
 
+    /**
+     * Проверка кода двухфакторной аунтентификации
+     *
+     * @param $verificationCode - код, который ввел пользователь
+     * @return bool
+     */
     public function checkTwoFactorCode($verificationCode) {
         $provider = new TwoFactorAuthenticationProvider(new Google2FA());
 

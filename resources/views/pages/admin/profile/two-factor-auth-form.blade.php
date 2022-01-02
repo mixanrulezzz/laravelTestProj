@@ -12,7 +12,10 @@
         </div>
         <div class="text-center p-3">
             <label for="verificationCodeInput">{{ __('Verification code') }}:</label>
-            <input type="text" name="verificationCode" class="input" id="verificationCodeInput" autocomplete="off">
+            <input type="text" name="verificationCode" class="input" id="verificationCodeInput" autocomplete="off" value="{{ old('verificationCode') }}">
+            @error('verificationCode')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
         </div>
     @endif
 
@@ -37,6 +40,12 @@
         $('body').find('.modal[data-modal-open=1]').modal('show');
         // Костыль для отправки формы подтверждения включения двухфакторной аунтентификации
         // todo Добавить константу для названия модального окна чтобы можно было везде использовать
-        $('body').find('#screen-modal-form-two-factor-auth').attr('action', '{{ route('platform.profile.checkTwoFactorAuth') }}');
+        let $modalForm = $('body').find('#screen-modal-form-two-factor-auth');
+        $modalForm.attr('action', '{{ route('platform.profile.checkTwoFactorAuth') }}');
+        $modalForm.attr('data-action-async', '1');
+
+        // $('body').on('submit', 'form[data-action-async=1]', function (event) {
+        //     event.preventDefault();
+        // });
     });
 </script>
