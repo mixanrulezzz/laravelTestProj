@@ -122,10 +122,10 @@ trait TwoFactorScreenAuthenticatable
 
             return back();
         } else {
-            // todo Вывод ошибок
-            Toast::error(__('Two-factor authentication hasn\'t been enabled'));
-
-
+            return back()
+                ->with('two-factor-auth', 'show')
+                ->with('status', 'show-two-factor-qr-code')
+                ->withErrors(['verificationCode' => __('Wrong verification code')]);
 
 //            throw ValidationException::withMessages([
 //                'verificationCode' => __('Wrong verification code')

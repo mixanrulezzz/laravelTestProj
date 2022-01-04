@@ -10,12 +10,14 @@
         <div class="text-center p-3">
             {!! $user->twoFactorQrCodeSvg() !!}
         </div>
-        <div class="text-center p-3">
-            <label for="verificationCodeInput">{{ __('Verification code') }}:</label>
-            <input type="text" name="verificationCode" class="input" id="verificationCodeInput" autocomplete="off" value="{{ old('verificationCode') }}">
-            @error('verificationCode')
-                <div class="alert alert-danger">{{ $message }}</div>
-            @enderror
+        <div class="form-group px-4 py-2">
+            <label for="verCode" class="form-label">{{ __('Verification code') }}:</label>
+            {!! Orchid\Screen\Fields\Input::make('verificationCode')
+                    ->id('verificationCodeInput')
+                    ->value(old('verificationCode'))
+                    ->autocomplete('off')
+                    ->render()
+                     !!}
         </div>
     @endif
 
