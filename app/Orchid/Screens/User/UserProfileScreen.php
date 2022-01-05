@@ -23,6 +23,8 @@ class UserProfileScreen extends Screen
 {
     use TwoFactorScreenAuthenticatable;
 
+    const TWO_FACTOR_MODAL = 'two-factor-auth';
+
     /**
      * Display header name.
      *
@@ -59,7 +61,7 @@ class UserProfileScreen extends Screen
     public function commandBar(): array
     {
         return [
-            $this->twoFactorCommandBar(),
+            //$this->twoFactorCommandBar(),
         ];
     }
 

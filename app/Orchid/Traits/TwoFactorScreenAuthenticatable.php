@@ -3,6 +3,7 @@
 namespace App\Orchid\Traits;
 
 use App\Models\User;
+use App\Orchid\Screens\User\UserProfileScreen;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Laravel\Fortify\Actions\DisableTwoFactorAuthentication;
@@ -24,15 +25,18 @@ trait TwoFactorScreenAuthenticatable
     /**
      * @return ModalToggle
      */
+    // todo Удалить за ненадобностью
     public function twoFactorCommandBar(): ModalToggle
     {
         return ModalToggle::make('ModalToggle')
-            ->modal('two-factor-auth')
+            ->modal(UserProfileScreen::TWO_FACTOR_MODAL)
             ->method('checkTwoFactorAuth')
-            ->canSee(true);
+            ->canSee(false);
     }
 
     /**
+     * Получение формы с кнопками для включения двухфакторной аунтентификации
+     *
      * @return View
      */
     public function twoFactorView(): View
@@ -40,20 +44,25 @@ trait TwoFactorScreenAuthenticatable
         return Layout::view('pages.admin.profile.two-factor-auth-field', ['isTwoFactorAuthEnable' => !empty(auth()->user()->hasEnabledTwoFactorAuthentication())]);
     }
 
+    /**
+     * Получение данных о модальном окне для двухфакторной аунтентификации
+     *
+     * @return Modal
+     */
     public function twoFactorModal(): Modal
     {
-        return Layout::modal('two-factor-auth', [
+        return Layout::modal(UserProfileScreen::TWO_FACTOR_MODAL, [
             Layout::view('pages.admin.profile.two-factor-auth-form'),
         ])
             ->title(__('Two factor authentication'))
             ->applyButton(__('Enable two-factor authentication'))
             ->staticBackdrop()
-            ->open(session('two-factor-auth') === 'show')
+            ->open(session(UserProfileScreen::TWO_FACTOR_MODAL) === 'show')
             ->method('checkTwoFactorAuth');
     }
 
     /**
-     * Disable two-factor authentication for the given user.
+     * Отключение двухфакторной аунтентификации
      *
      * @param Request                        $request
      * @param DisableTwoFactorAuthentication $disableTwoFactorAuthentication
@@ -73,15 +82,22 @@ trait TwoFactorScreenAuthenticatable
      *
      * @return \Illuminate\Http\RedirectResponse
      */
+    // todo Переделать
     public function generateNewRecoveryCodes(Request $request, GenerateNewRecoveryCodes $generateNewRecoveryCodes)
     {
         $generateNewRecoveryCodes($request->user());
 
         Toast::success(__('Recovery codes have been updated.'));
 
-        return back()->with('two-factor-auth', 'show');
+        return back()->with(UserProfileScreen::TWO_FACTOR_MODAL, 'show');
     }
 
+    /**
+     * Открытие модального окна с данными для двухфакторной аунтентификации
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function openTwoFactorModal(Request $request)
     {
         /** @var User $user */
@@ -92,14 +108,16 @@ trait TwoFactorScreenAuthenticatable
         $request->session()->put('user', $user);
 
         return back()
-            ->with('two-factor-auth', 'show')
+            ->with(UserProfileScreen::TWO_FACTOR_MODAL, 'show')
             ->with('status', 'show-two-factor-qr-code');
     }
 
+
     /**
-     * Enable two-factor authentication for the user.
+     * Проверка введенных данных для включения двухфакторной аунтентификации
      *
      * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function checkTwoFactorAuth(Request $request)
     {
@@ -115,6 +133,7 @@ trait TwoFactorScreenAuthenticatable
         }
 
         if ($isValid) {
+            // Если все хорошо, то сохраняем данные для двухфакторной аунтентификации и перезагружаем страницу
             $user->save();
             $request->session()->forget('user');
 
@@ -122,14 +141,11 @@ trait TwoFactorScreenAuthenticatable
 
             return back();
         } else {
+            // Если была ошибка в проверочном коде, то перезагружаем экран с модальным окном и с ошибкой
             return back()
-                ->with('two-factor-auth', 'show')
+                ->with(UserProfileScreen::TWO_FACTOR_MODAL, 'show')
                 ->with('status', 'show-two-factor-qr-code')
                 ->withErrors(['verificationCode' => __('Wrong verification code')]);
-
-//            throw ValidationException::withMessages([
-//                'verificationCode' => __('Wrong verification code')
-//            ]);
         }
     }
 }

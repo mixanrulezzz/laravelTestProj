@@ -11,5 +11,6 @@
     "Two-factor authentication hasn't been enabled": "Не удалось включить двухфакторную аунтентификацию",
     "Show 2FA Recovery Codes": "Коды восстановления двухфакторной аунтентификации",
     "Store these recovery codes in a secure password manager. They can be used to recover access to your account if your two factor authentication device is lost.": "Храните эти коды восстановления в безопасном диспетчере паролей. Их можно использовать для восстановления доступа к вашей учетной записи, если ваше устройство двухфакторной аутентификации потеряно.",
-    "Wrong verification code": "Неверный проверочный код"
+    "Wrong verification code": "Неверный проверочный код",
+    "Settings": "Настройки"
 }

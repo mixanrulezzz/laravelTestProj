@@ -15,6 +15,7 @@ use App\Orchid\Screens\Role\RoleListScreen;
 use App\Orchid\Screens\User\UserEditScreen;
 use App\Orchid\Screens\User\UserListScreen;
 use App\Orchid\Screens\User\UserProfileScreen;
+use App\Orchid\Screens\MainSettingsScreen;
 use Illuminate\Support\Facades\Route;
 use Tabuna\Breadcrumbs\Trail;
 
@@ -33,6 +34,7 @@ use Tabuna\Breadcrumbs\Trail;
 Route::screen('/main', PlatformScreen::class)
     ->name('platform.main');
 
+
 // Platform > Profile
 Route::screen('profile', UserProfileScreen::class)
     ->name('platform.profile')
@@ -50,6 +52,16 @@ Route::get('profile/disableTwoFactorAuth', 'UserProfileScreen@disableTwoFactorAu
 
 Route::get('profile/checkTwoFactorAuth', 'UserProfileScreen@checkTwoFactorAuth')
     ->name('platform.profile.checkTwoFactorAuth');
+
+
+// Platform > System > Settings
+Route::screen('settings', MainSettingsScreen::class)
+    ->name('platform.systems.settings')
+    ->breadcrumbs(function (Trail $trail) {
+        return $trail
+            ->parent('platform.index')
+            ->push(__('Settings'), route('platform.systems.settings'));
+    });
 
 // Platform > System > Users
 Route::screen('users/{user}/edit', UserEditScreen::class)

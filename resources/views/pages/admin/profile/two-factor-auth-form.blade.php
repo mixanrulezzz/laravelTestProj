@@ -11,13 +11,14 @@
             {!! $user->twoFactorQrCodeSvg() !!}
         </div>
         <div class="form-group px-4 py-2">
-            <label for="verCode" class="form-label">{{ __('Verification code') }}:</label>
-            {!! Orchid\Screen\Fields\Input::make('verificationCode')
+            <label for="verificationCodeInput" class="form-label">{{ __('Verification code') }}:</label>
+            {!!
+                Orchid\Screen\Fields\Input::make('verificationCode')
                     ->id('verificationCodeInput')
                     ->value(old('verificationCode'))
                     ->autocomplete('off')
                     ->render()
-                     !!}
+            !!}
         </div>
     @endif
 
@@ -37,17 +38,8 @@
 
 <script>
     $(document).ready(function () {
-        // Костыль для открытия формы при клике на кнопку
-        // todo Перенести в отдельный js файл и возможно предложить добавить в платформу orchid
-        $('body').find('.modal[data-modal-open=1]').modal('show');
-        // Костыль для отправки формы подтверждения включения двухфакторной аунтентификации
-        // todo Добавить константу для названия модального окна чтобы можно было везде использовать
-        let $modalForm = $('body').find('#screen-modal-form-two-factor-auth');
+        {{-- Костыль для отправки формы подтверждения включения двухфакторной аунтентификации --}}
+        let $modalForm = $('body').find('#screen-modal-form-{{ \App\Orchid\Screens\User\UserProfileScreen::TWO_FACTOR_MODAL }}');
         $modalForm.attr('action', '{{ route('platform.profile.checkTwoFactorAuth') }}');
-        $modalForm.attr('data-action-async', '1');
-
-        // $('body').on('submit', 'form[data-action-async=1]', function (event) {
-        //     event.preventDefault();
-        // });
     });
 </script>

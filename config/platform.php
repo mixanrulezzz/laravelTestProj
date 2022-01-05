@@ -110,7 +110,7 @@ return [
 
     'resource' => [
         'stylesheets' => [],
-        'scripts'     => [],
+        'scripts'     => ['/js/admin.js'],
     ],
 
     /*
