@@ -83,3 +83,5 @@ Fortify
 
 Используется админка https://orchid.software/ , для нее при установке нужно выполнить команду 
 php artisan orchid:admin admin admin@admin.com password
+
+Для настроек используется sqlite, при установке надо создать новую базу данных и добавить в env файл путь до нее

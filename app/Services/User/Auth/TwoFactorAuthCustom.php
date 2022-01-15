@@ -23,7 +23,7 @@ trait TwoFactorAuthCustom {
      */
     public function generateRecoveryCodes() {
         // todo Сделать кол-во кодов настраиваемым
-        $this->two_factor_recovery_codes = encrypt(json_encode(Collection::times(8, function () {
+        $this->two_factor_recovery_codes = encrypt(json_encode(Collection::times(settings('two_factor.recovery_codes.amount', 8), function () {
             return RecoveryCode::generate();
         })->all()));
     }
