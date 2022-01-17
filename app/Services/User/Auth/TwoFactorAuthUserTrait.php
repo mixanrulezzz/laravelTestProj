@@ -6,13 +6,13 @@ use Illuminate\Support\Collection;
 use Laravel\Fortify\TwoFactorAuthenticationProvider;
 use PragmaRX\Google2FA\Google2FA;
 
-trait TwoFactorAuthCustom {
+trait TwoFactorAuthUserTrait {
 
     /**
      * Генерирование нового секрета для двухфакторной аунтентификации
      */
     public function generateTwoFactorSecret() {
-        $provider = new TwoFactorAuthenticationProvider(new Google2FA());
+        $provider = $this->getNewTwoFactorAuthProvider();
 
         $secretKey = encrypt($provider->generateSecretKey());
         $this->two_factor_secret = $secretKey;
@@ -22,10 +22,7 @@ trait TwoFactorAuthCustom {
      * Генерирование кодов для восстановления двухфакторной аунтентификации
      */
     public function generateRecoveryCodes() {
-        // todo Сделать кол-во кодов настраиваемым
-        $this->two_factor_recovery_codes = encrypt(json_encode(Collection::times(settings('two_factor.recovery_codes.amount', 8), function () {
-            return RecoveryCode::generate();
-        })->all()));
+        $this->two_factor_recovery_codes = encrypt(json_encode(RecoveryCode::generate()));
     }
 
     /**
@@ -35,8 +32,13 @@ trait TwoFactorAuthCustom {
      * @return bool
      */
     public function checkTwoFactorCode($verificationCode) {
-        $provider = new TwoFactorAuthenticationProvider(new Google2FA());
+        $provider = $this->getNewTwoFactorAuthProvider();
 
         return $provider->verify(decrypt($this->two_factor_secret), $verificationCode);
+    }
+
+    private function getNewTwoFactorAuthProvider()
+    {
+        return new TwoFactorAuthenticationProvider(new Google2FA());
     }
 }

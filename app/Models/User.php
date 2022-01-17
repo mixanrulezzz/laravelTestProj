@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use App\Services\User\Auth\TwoFactorAuthCustom;
+use App\Services\User\Auth\TwoFactorAuthUserTrait;
 use Orchid\Platform\Models\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable, TwoFactorAuthenticatable, TwoFactorAuthCustom;
+    use Notifiable, TwoFactorAuthenticatable, TwoFactorAuthUserTrait;
 
     /**
      * The attributes that are mass assignable.

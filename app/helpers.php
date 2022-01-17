@@ -10,7 +10,6 @@ if (! function_exists('settings')) {
      * @param  mixed  $default
      * @return mixed
      */
-    // todo Сделать кеширование настроек
     function settings($key, $default = null)
     {
         if (is_array($key)) {

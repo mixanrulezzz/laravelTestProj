@@ -23,18 +23,6 @@ use PragmaRX\Google2FA\Google2FA;
 trait TwoFactorScreenAuthenticatable
 {
     /**
-     * @return ModalToggle
-     */
-    // todo Удалить за ненадобностью
-    public function twoFactorCommandBar(): ModalToggle
-    {
-        return ModalToggle::make('ModalToggle')
-            ->modal(UserProfileScreen::TWO_FACTOR_MODAL)
-            ->method('checkTwoFactorAuth')
-            ->canSee(false);
-    }
-
-    /**
      * Получение формы с кнопками для включения двухфакторной аунтентификации
      *
      * @return View
