@@ -36,10 +36,12 @@
     @endif
 @endif
 
-<script>
-    $(document).ready(function () {
-        {{-- Костыль для отправки формы подтверждения включения двухфакторной аунтентификации --}}
-        let $modalForm = $('body').find('#screen-modal-form-{{ \App\Orchid\Screens\User\UserProfileScreen::TWO_FACTOR_MODAL }}');
-        $modalForm.attr('action', '{{ route('platform.profile.checkTwoFactorAuth') }}');
-    });
-</script>
+@if(session('status') == 'show-two-factor-qr-code')
+    <script>
+        $(document).ready(function () {
+            {{-- Костыль для отправки формы подтверждения включения двухфакторной аунтентификации --}}
+            let $modalForm = $('body').find('#screen-modal-form-{{ \App\Orchid\Screens\User\UserProfileScreen::TWO_FACTOR_MODAL }}');
+            $modalForm.attr('action', '{{ route('platform.profile.checkTwoFactorAuth') }}');
+        });
+    </script>
+@endif

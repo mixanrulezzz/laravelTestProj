@@ -14,5 +14,7 @@
     "Wrong verification code": "Неверный проверочный код",
     "Settings": "Настройки",
     "Number of recovery codes": "Количество кодов восстановления",
-    "Two-factor authentication settings": "Настройки двухфакторной аунтентификации"
+    "Two-factor authentication settings": "Настройки двухфакторной аунтентификации",
+    "Generate new recovery codes": "Сгенерировать новые коды восстановления",
+    "Recovery codes have been updated.": "Коды восстановления были обновлены."
 }
