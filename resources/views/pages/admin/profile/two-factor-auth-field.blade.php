@@ -13,22 +13,29 @@
 
 {{--        </div>--}}
 
-        <div class="bg-light px-4 py-3 d-flex align-items-center justify-content-end rounded" style="width: 100%">
-            <div class="form-group mb-0">
-
+        <div class="bg-light px-4 py-3 d-flex align-items-center rounded
+            @if($isTwoFactorAuthEnable) justify-content-between @else justify-content-end @endif" style="width: 100%">
                 @if($isTwoFactorAuthEnable)
-                    <button data-controller="button" data-turbo="true" class="btn btn-danger" type="submit" form="post-form"
-                            formaction="{{ route('platform.profile.disableTwoFactorAuth') }}">
-                        {{ __('Disable two-factor authentication') }}
-                    </button>
+                    <div class="form-group mb-0">
+                        <button data-controller="button" data-turbo="true" class="btn btn-primary" type="submit" form="post-form"
+                                formaction="{{ route('platform.profile.generateNewRecoveryCodes') }}">
+                            {{ __('Generate new recovery codes') }}
+                        </button>
+                    </div>
+                    <div class="form-group mb-0">
+                        <button data-controller="button" data-turbo="true" class="btn btn-danger" type="submit" form="post-form"
+                                formaction="{{ route('platform.profile.disableTwoFactorAuth') }}">
+                            {{ __('Disable two-factor authentication') }}
+                        </button>
+                    </div>
                 @else
-                    <button data-controller="button" data-turbo="true" class="btn btn-default" type="submit" form="post-form"
-                            formaction="{{ route('platform.profile.openTwoFactorModal') }}">
-                        {{ __('Enable two-factor authentication') }}
-                    </button>
+                    <div class="form-group mb-0">
+                        <button data-controller="button" data-turbo="true" class="btn btn-default" type="submit" form="post-form"
+                                formaction="{{ route('platform.profile.openTwoFactorModal') }}">
+                            {{ __('Enable two-factor authentication') }}
+                        </button>
+                    </div>
                 @endif
-
-            </div>
         </div>
     </div>
 </fieldset>

@@ -53,6 +53,9 @@ Route::get('profile/disableTwoFactorAuth', 'UserProfileScreen@disableTwoFactorAu
 Route::get('profile/checkTwoFactorAuth', 'UserProfileScreen@checkTwoFactorAuth')
     ->name('platform.profile.checkTwoFactorAuth');
 
+Route::get('profile/generateNewRecoveryCodes', 'UserProfileScreen@generateNewRecoveryCodes')
+    ->name('platform.profile.generateNewRecoveryCodes');
+
 
 // Platform > System > Settings
 Route::screen('settings', MainSettingsScreen::class)

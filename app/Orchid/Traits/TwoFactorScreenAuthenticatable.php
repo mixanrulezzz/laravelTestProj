@@ -39,14 +39,22 @@ trait TwoFactorScreenAuthenticatable
      */
     public function twoFactorModal(): Modal
     {
-        return Layout::modal(UserProfileScreen::TWO_FACTOR_MODAL, [
-            Layout::view('pages.admin.profile.two-factor-auth-form'),
-        ])
+        $modal = Layout::modal(UserProfileScreen::TWO_FACTOR_MODAL, [
+                Layout::view('pages.admin.profile.two-factor-auth-form'),
+            ])
             ->title(__('Two factor authentication'))
             ->applyButton(__('Enable two-factor authentication'))
             ->staticBackdrop()
             ->open(session(UserProfileScreen::TWO_FACTOR_MODAL) === 'show')
             ->method('checkTwoFactorAuth');
+
+        // Убираем кнопку подтверждения формы, если двухфакторная аунтентификация уже включена
+        $isTwoFactorAuthEnable = auth()->user()->two_factor_secret;
+        if ($isTwoFactorAuthEnable) {
+            $modal->withoutApplyButton();
+        }
+
+        return $modal;
     }
 
     /**
@@ -70,10 +78,13 @@ trait TwoFactorScreenAuthenticatable
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    // todo Переделать
-    public function generateNewRecoveryCodes(Request $request, GenerateNewRecoveryCodes $generateNewRecoveryCodes)
+    public function generateNewRecoveryCodes(Request $request)
     {
-        $generateNewRecoveryCodes($request->user());
+        $user = $request->user();
+        $user->generateRecoveryCodes();
+        $user->save();
+
+        $request->session()->put('user', $user);
 
         Toast::success(__('Recovery codes have been updated.'));
 
